@@ -14,7 +14,7 @@ const Editor: React.FC<Props> = ({ initialDoc, onChange }) => {
         onChange: handleChange
     });
 
-    return <div ref={refContainer} />;
+    return <div style={{ height: '100%' }} ref={refContainer} />;
 };
 
 export default Editor;

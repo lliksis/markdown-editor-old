@@ -1,8 +1,18 @@
 // Native
 import { join } from 'path';
+import { readFile } from 'fs';
 
 // Packages
-import { BrowserWindow, app, ipcMain, IpcMainEvent } from 'electron';
+import {
+    BrowserWindow,
+    app,
+    ipcMain,
+    IpcMainEvent,
+    Menu,
+    MenuItemConstructorOptions,
+    MenuItem,
+    dialog
+} from 'electron';
 import isDev from 'electron-is-dev';
 
 const height = 600;
@@ -21,7 +31,7 @@ function createWindow() {
             preload: join(__dirname, 'preload.js')
         },
         center: true,
-        opacity: 0.85
+        backgroundColor: '#3E4451'
     });
 
     const port = process.env.PORT || 3000;
@@ -34,7 +44,39 @@ function createWindow() {
         window?.loadFile(url);
     }
     // Open the DevTools.
-    // window.webContents.openDevTools();
+    window.webContents.openDevTools();
+
+    const menuTemplate: Array<MenuItemConstructorOptions | MenuItem> = [
+        {
+            label: '&File',
+            submenu: [
+                {
+                    label: '&Open',
+                    accelerator: 'CmdOrCtrl+O',
+                    click: () => {
+                        dialog
+                            .showOpenDialog({
+                                properties: ['openFile'],
+                                filters: [{ name: 'Markdown Files', extensions: ['md', 'mdx'] }]
+                            })
+                            .then((result) => {
+                                if (result.canceled) {
+                                    return;
+                                }
+                                const filePath = result.filePaths[0];
+                                readFile(filePath, (err, data) => {
+                                    if (!err) {
+                                        window.webContents.send('open-file', data.toString());
+                                    }
+                                });
+                            });
+                    }
+                }
+            ]
+        }
+    ];
+    const menu = Menu.buildFromTemplate(menuTemplate);
+    window.setMenu(menu);
 }
 
 // This method will be called when Electron has finished

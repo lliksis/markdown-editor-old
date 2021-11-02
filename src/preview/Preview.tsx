@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 import remarkReact from 'remark-react';
 import { defaultSchema } from 'hast-util-sanitize';
 import './Preview.css';
-import 'github-markdown-css/github-markdown.css';
+import 'github-markdown-css/github-markdown-dark.css';
 
 interface Props {
     doc: string;

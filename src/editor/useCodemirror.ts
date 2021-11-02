@@ -5,7 +5,7 @@ import { defaultKeymap } from '@codemirror/commands';
 import { history, historyKeymap } from '@codemirror/history';
 import { indentOnInput } from '@codemirror/language';
 import { bracketMatching } from '@codemirror/matchbrackets';
-import { lineNumbers, highlightActiveLineGutter } from '@codemirror/gutter';
+import { highlightActiveLineGutter } from '@codemirror/gutter';
 import { defaultHighlightStyle, HighlightStyle, tags } from '@codemirror/highlight';
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
@@ -44,16 +44,15 @@ interface Props {
 const useCodeMirror = <T extends Element>(props: Props): [React.MutableRefObject<T | null>, EditorView?] => {
     const refContainer = React.useRef<T>(null);
     const [editorView, setEditorView] = React.useState<EditorView>();
-    const { onChange } = props;
+    const { onChange, initialDoc } = props;
 
     React.useEffect(() => {
         if (!refContainer.current) return;
 
         const startState = EditorState.create({
-            doc: props.initialDoc,
+            doc: initialDoc,
             extensions: [
                 keymap.of([...defaultKeymap, ...historyKeymap]),
-                lineNumbers(),
                 highlightActiveLineGutter(),
                 highlightActiveLine(),
                 history(),

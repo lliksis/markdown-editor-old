@@ -3,10 +3,18 @@ import Editor from './editor/Editor';
 import Preview from './preview/Preview';
 
 const App: React.FC = () => {
-    const [doc, setDoc] = React.useState('# Hello, World!\n');
+    const [doc, setDoc] = React.useState('');
     const handleDocChange = React.useCallback((newDoc) => {
         setDoc(newDoc);
     }, []);
+
+    React.useEffect(() => {
+        if (window.Main) {
+            window.Main.on('open-file', (data) => {
+                setDoc(data);
+            });
+        }
+    }, [handleDocChange]);
 
     return (
         <div className="w-screen h-screen md:flex">
