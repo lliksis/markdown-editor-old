@@ -19,7 +19,9 @@ function createWindow() {
         fullscreenable: true,
         webPreferences: {
             preload: join(__dirname, 'preload.js')
-        }
+        },
+        center: true,
+        opacity: 0.85
     });
 
     const port = process.env.PORT || 3000;
