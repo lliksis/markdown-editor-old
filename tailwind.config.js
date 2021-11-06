@@ -7,8 +7,15 @@ module.exports = {
     purge: ['./src/index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
     darkMode: false, // or 'media' or 'class'
     theme: {
-        colors: {
-            backgroundColor: colors.gray[700]
+        backgroundColor: {
+            primary: colors.gray[700]
+        },
+        textColor: {
+            primary: '#abb2bf',
+            secondary: '#5F6673'
+        },
+        borderColor: {
+            primary: '#5F6673'
         },
         extend: {}
     },

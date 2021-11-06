@@ -3,7 +3,11 @@
     color: #abb2bf;
     font-size: 1em !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    @apply bg-backgroundColor;
+    @apply bg-primary;
+}
+
+.CodeMirror-cursor {
+    border-left: 1px solid #abb2bf !important;
 }
 
 .cm-header-1 {

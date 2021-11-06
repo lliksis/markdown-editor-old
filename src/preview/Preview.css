@@ -2,7 +2,7 @@
     height: 100%;
     padding: 12px;
     color: #abb2bf;
-    @apply bg-backgroundColor;
+    @apply bg-primary;
 }
 
 .preview.markdown-body pre {
