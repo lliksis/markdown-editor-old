@@ -3,7 +3,7 @@ import Editor from './editor/Editor';
 import Preview from './preview/Preview';
 
 const App: React.FC = () => {
-    const [doc, setDoc] = React.useState('');
+    const [doc, setDoc] = React.useState('# Hello World!');
     const handleDocChange = React.useCallback((newDoc) => {
         setDoc(newDoc);
     }, []);

@@ -1,5 +1,9 @@
 import React from 'react';
-import useCodeMirror from './useCodemirror';
+import CodeMirror from 'react-codemirror';
+import './Editor.css';
+
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/gfm/gfm';
 
 interface Props {
     initialDoc: string;
@@ -7,14 +11,25 @@ interface Props {
 }
 
 const Editor: React.FC<Props> = ({ initialDoc, onChange }) => {
-    const handleChange = React.useCallback((state) => onChange(state.doc.toString()), [onChange]);
-
-    const [refContainer] = useCodeMirror<HTMLDivElement>({
-        initialDoc,
-        onChange: handleChange
-    });
-
-    return <div style={{ height: '100%' }} ref={refContainer} />;
+    return (
+        <CodeMirror
+            value={initialDoc}
+            onChange={(value) => {
+                onChange(value);
+            }}
+            options={{
+                mode: {
+                    name: 'gfm',
+                    gitHubSpice: true,
+                    taskLists: true,
+                    strikethrough: true,
+                    emoji: true,
+                    typescript: true
+                },
+                theme: 'one-dark'
+            }}
+        />
+    );
 };
 
 export default Editor;

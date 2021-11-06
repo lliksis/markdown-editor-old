@@ -9,3 +9,7 @@
     background-color: rgba(27, 31, 35, 0.45);
     color: #dce1eb;
 }
+
+thead > tr {
+    background-color: #060a10 !important;
+}
