@@ -68,7 +68,10 @@ function createWindow() {
                                 const filePath = result.filePaths[0];
                                 readFile(filePath, (err, data) => {
                                     if (!err) {
-                                        window.webContents.send('open-file', data.toString());
+                                        window.webContents.send('open-file', {
+                                            path: filePath,
+                                            value: data.toString()
+                                        });
                                     }
                                 });
                             });

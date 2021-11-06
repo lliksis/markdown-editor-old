@@ -1,34 +1,49 @@
-.ReactCodeMirror .CodeMirror {
-    height: 100%;
-    color: #abb2bf;
+.CodeMirror {
+    height: 100% !important;
+    color: #abb2bf !important;
     font-size: 1em !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    @apply bg-primary;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    @apply bg-primary !important;
 }
 
 .CodeMirror-cursor {
     border-left: 1px solid #abb2bf !important;
 }
 
+.cm-header {
+    color: inherit !important;
+}
+
+.cm-s-default {
+    color: #abb2bf !important;
+}
+
+.cm-link {
+    color: #58a6ff !important;
+}
+
+.cm-comment {
+    color: #a50 !important;
+}
+
 .cm-header-1 {
     font-size: 1.6em;
-    font-weight: 'bold';
+    font-weight: bold;
 }
 
 .cm-header-2 {
     font-size: 1.4em;
-    font-weight: 'bold';
+    font-weight: bold;
 }
 
 .cm-header-3 {
     font-size: 1.2em;
-    font-weight: 'bold';
+    font-weight: bold;
 }
 
 .cm-comment {
     background-color: rgba(27, 31, 35, 0.45);
     border-radius: 3px;
-    /* padding: 1px; */
 }
 
 .cm-comment::after .cm-comment::before {

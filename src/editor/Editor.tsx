@@ -1,20 +1,21 @@
 import React from 'react';
-import CodeMirror from 'react-codemirror';
+import { Controlled as CodeMirrorEditor } from 'react-codemirror2';
+import IDocument from '../IDocument';
 import './Editor.css';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/gfm/gfm';
 
 interface Props {
-    initialDoc: string;
+    doc: IDocument;
     onChange: (doc: string) => void;
 }
 
-const Editor: React.FC<Props> = ({ initialDoc, onChange }) => {
+const Editor: React.FC<Props> = ({ doc, onChange }) => {
     return (
-        <CodeMirror
-            value={initialDoc}
-            onChange={(value) => {
+        <CodeMirrorEditor
+            value={doc.value}
+            onBeforeChange={(editor, data, value) => {
                 onChange(value);
             }}
             options={{
@@ -26,7 +27,8 @@ const Editor: React.FC<Props> = ({ initialDoc, onChange }) => {
                     emoji: true,
                     typescript: true
                 },
-                theme: 'one-dark'
+                lineWrapping: true,
+                autofocus: true
             }}
         />
     );

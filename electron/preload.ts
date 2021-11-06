@@ -23,7 +23,7 @@ export const api = {
      * Provide an easier way to listen to events
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    on: (channel: string, callback: (data: any) => void) => {
+    on: (channel: string, callback: (...args: any[]) => void) => {
         ipcRenderer.on(channel, (_, data) => callback(data));
     }
 };
