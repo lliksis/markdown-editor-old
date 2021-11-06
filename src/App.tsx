@@ -17,7 +17,7 @@ const App: React.FC = () => {
     }, [handleDocChange]);
 
     return (
-        <div className="w-screen h-screen md:flex">
+        <div className="w-screen h-screen md:flex bg-backgroundColor">
             <div className="w-full md:w-1/2 h-1/2 md:h-full overflow-auto">
                 <Editor initialDoc={doc} onChange={handleDocChange} />
             </div>

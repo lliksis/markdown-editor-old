@@ -30,8 +30,7 @@ function createWindow() {
         webPreferences: {
             preload: join(__dirname, 'preload.js')
         },
-        center: true,
-        backgroundColor: '#3E4451'
+        center: true
     });
 
     const port = process.env.PORT || 3000;
@@ -43,8 +42,11 @@ function createWindow() {
     } else {
         window?.loadFile(url);
     }
+
     // Open the DevTools.
-    window.webContents.openDevTools();
+    if (isDev) {
+        window.webContents.openDevTools();
+    }
 
     const menuTemplate: Array<MenuItemConstructorOptions | MenuItem> = [
         {
