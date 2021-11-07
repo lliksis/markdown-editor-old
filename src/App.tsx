@@ -2,6 +2,7 @@ import React from 'react';
 import Editor from './editor/Editor';
 import Preview from './preview/Preview';
 import IDocument from './IDocument';
+import Channels from '../electron/listener.types';
 
 const App: React.FC = () => {
     const [doc, setDoc] = React.useState<IDocument>({
@@ -13,24 +14,27 @@ const App: React.FC = () => {
                 ...doc,
                 value
             });
+            if (window.Main) {
+                window.Main.send(Channels['document-edited']);
+            }
         },
         [doc]
     );
 
     React.useEffect(() => {
         if (window.Main) {
-            window.Main.on('load-file', (_, data: IDocument) => {
+            window.Main.on(Channels['load-file'], (_, data: IDocument) => {
                 setDoc(data);
             });
 
-            window.Main.on('save-file', (event) => {
-                event.sender.send('save-file-return', doc);
+            window.Main.on(Channels['save-file'], (event) => {
+                event.sender.send(Channels['save-file-return'], doc);
             });
         }
 
         return () => {
             if (window.Main) {
-                window.Main.removeAll('save-file');
+                window.Main.removeAll(Channels['save-file']);
             }
         };
     });
