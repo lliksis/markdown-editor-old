@@ -26,6 +26,7 @@
         "prettier/prettier": "error",
         // Typescript
         "no-use-before-define": "off",
+        "import/no-extraneous-dependencies": "off",
         "import/prefer-default-export": "warn",
         "@typescript-eslint/no-use-before-define": ["error"],
         "@typescript-eslint/no-unused-vars": "warn",
