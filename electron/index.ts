@@ -1,6 +1,6 @@
 // Native
 import { join } from 'path';
-import { readFile } from 'fs';
+import { readFile, writeFile } from 'fs';
 
 // Packages
 import {
@@ -48,6 +48,21 @@ function createWindow() {
         window.webContents.openDevTools();
     }
 
+    ipcMain.on('save-file-return', (_: IpcMainEvent, { path, value }) => {
+        if (!path) {
+            dialog.showSaveDialog({}).then((result) => {
+                if (result.canceled && !result.filePath) return;
+                writeFile(result.filePath!, value, (err) => {
+                    console.error(err);
+                });
+            });
+        } else {
+            writeFile(path, value, (err) => {
+                console.error(err);
+            });
+        }
+    });
+
     const menuTemplate: Array<MenuItemConstructorOptions | MenuItem> = [
         {
             label: '&File',
@@ -68,13 +83,20 @@ function createWindow() {
                                 const filePath = result.filePaths[0];
                                 readFile(filePath, (err, data) => {
                                     if (!err) {
-                                        window.webContents.send('open-file', {
+                                        window.webContents.send('load-file', {
                                             path: filePath,
                                             value: data.toString()
                                         });
                                     }
                                 });
                             });
+                    }
+                },
+                {
+                    label: '&Save',
+                    accelerator: 'CmdOrCtrl+S',
+                    click: () => {
+                        window.webContents.send('save-file');
                     }
                 }
             ]
@@ -102,13 +124,4 @@ app.whenReady().then(() => {
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
-});
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-
-// listen the channel `message` and resend the received message to the renderer process
-ipcMain.on('message', (event: IpcMainEvent, message: any) => {
-    console.log(message);
-    setTimeout(() => event.sender.send('message', 'hi from electron'), 500);
 });

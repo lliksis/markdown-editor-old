@@ -7,20 +7,33 @@ const App: React.FC = () => {
     const [doc, setDoc] = React.useState<IDocument>({
         value: '# Hello World!'
     });
-    const handleDocChange = React.useCallback((value: string) => {
-        setDoc({
-            ...doc,
-            value
-        });
-    }, []);
+    const handleDocChange = React.useCallback(
+        (value: string) => {
+            setDoc({
+                ...doc,
+                value
+            });
+        },
+        [doc]
+    );
 
     React.useEffect(() => {
         if (window.Main) {
-            window.Main.on('open-file', (data: IDocument) => {
+            window.Main.on('load-file', (_, data: IDocument) => {
                 setDoc(data);
             });
+
+            window.Main.on('save-file', (event) => {
+                event.sender.send('save-file-return', doc);
+            });
         }
-    }, [handleDocChange]);
+
+        return () => {
+            if (window.Main) {
+                window.Main.removeAll('save-file');
+            }
+        };
+    });
 
     const [collapsed, setCollapsed] = React.useState(false);
     const onChangeCollapsed = (event: React.MouseEvent) => {
